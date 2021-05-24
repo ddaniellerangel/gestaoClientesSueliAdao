@@ -1,11 +1,16 @@
 package com.daniellerangel.suelieadao.domain;
 
 import java.io.Serializable;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.sun.istack.NotNull;
 
 @Entity(name="uf")
@@ -14,34 +19,32 @@ public class Estado implements Serializable{
 	
 	@Id
 	@NotNull
-	@Column(name="ufcodigo")
-	private Integer codEstado;
-	
-	@NotNull
 	@Column(name="ufsigla")
 	private String siglaEstado;
-	
 	@NotNull
 	@Column(name="ufnome")
 	private String nomeEstado;
+	
+	@JsonBackReference
+	@OneToMany(mappedBy="estado", fetch=FetchType.EAGER, cascade=CascadeType.ALL)
+	private List<Cidade> listCidades;
 	
 	public Estado() {
 		
 	}
 
-	public Estado(Integer codEstado, String siglaEstado, String nomeEstado) {
+	public List<Cidade> getListCidades() {
+		return listCidades;
+	}
+
+	public void setListCidades(List<Cidade> listCidades) {
+		this.listCidades = listCidades;
+	}
+
+	public Estado(String siglaEstado, String nomeEstado) {
 		super();
-		this.codEstado = codEstado;
 		this.siglaEstado = siglaEstado;
 		this.nomeEstado = nomeEstado;
-	}
-
-	public Integer getCodEstado() {
-		return codEstado;
-	}
-
-	public void setCodEstado(Integer codEstado) {
-		this.codEstado = codEstado;
 	}
 
 	public String getSiglaEstado() {

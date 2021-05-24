@@ -1,6 +1,5 @@
 package com.daniellerangel.suelieadao.resources;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,11 +19,15 @@ public class EstadoResource {
 	@Autowired
 	private EstadoService estadoService;
 	
-	@RequestMapping(value="/{cod}", method = RequestMethod.GET)
-	public ResponseEntity<?> find(@PathVariable Integer cod) {
-		Estado estado = estadoService.buscaPorId(cod);
-		
+	@RequestMapping(value="/{sigla}", method = RequestMethod.GET)
+	public ResponseEntity<?> find(@PathVariable String sigla) {
+		Estado estado = estadoService.buscaPorId(sigla.toUpperCase());
 		return ResponseEntity.ok().body(estado);
-		
+	}
+	
+	@RequestMapping(method = RequestMethod.GET)
+	public ResponseEntity<?> findAll(){
+		List<Estado> listEstados = estadoService.listaEstados();
+		return ResponseEntity.ok().body(listEstados);
 	}
 }

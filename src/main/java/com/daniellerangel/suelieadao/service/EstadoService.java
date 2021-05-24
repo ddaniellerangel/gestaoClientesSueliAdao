@@ -15,9 +15,13 @@ public class EstadoService {
 	@Autowired
 	private EstadoDao estadoDao;
 	
-	public Estado buscaPorId(Integer cod) {
-		Optional<Estado> obj = estadoDao.findById(cod);
+	public Estado buscaPorId(String sigla) {
+		Optional<Estado> obj = estadoDao.findById(sigla);
 		return obj.orElse(null);
 	}
-
+	
+	public List<Estado> listaEstados(){
+		List<Estado> listEstado = estadoDao.findAll();
+		return listEstado;
+	}
 }
